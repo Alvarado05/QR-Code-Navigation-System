@@ -125,7 +125,6 @@ def run(startNode, endNode):
     connectionFile = "src/A_Star/Maps/SecondFloorConnections.csv"
     connections = pd.read_csv(connectionFile)
     nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
-    graphMap(nodes,connections)
 
     nodes = heuristicCalc(nodes, endNode)
     nodes.columns =  ['X', 'Y', 'H']
