@@ -9,7 +9,9 @@ def heuristicCalc(nodes, endNode):
     The distances of all nodes to endNode
 
     Accepts as Input:
-    nodes: df with the nodes as index names and X,Y as columns
+    
+    nodes: dataframe with the nodes as index names and X,Y as columns
+    
     endNode: the node that the function will use as reference
     """
     endCoor = nodes.loc[endNode, :].tolist()
@@ -24,7 +26,7 @@ def graphMap(nodes, connections):
     grafo = nx.Graph()
     fig, ax = plt.subplots()
 
-    #print(nodes.iloc[0,:])
+    print(nodes.iloc[0,:])
     grafo.add_node("A", pos=(1, 11))
     grafo.add_node("B", pos=(4, 11))
     grafo.add_node("C", pos=(16, 11))
@@ -92,6 +94,19 @@ def graphMap(nodes, connections):
     plt.show()
 
 def aStarCalc(startNode, endNode, nodes, connections):
+    """
+    Returns a list with the nodes that the algorithm passed to go from the start node to de end node.
+
+    Accepts as Inputs:
+    
+    startNode: A string that contains the name of the start node.
+    
+    endNode: A string that contains the name of the end node.
+    
+    nodes: A dataframe with the nodes as index names and X,Y as columns
+    
+    connections: A datafrmae with the connection between two nodes in two columns
+    """
     openNodes = [startNode]
     closedNodes = []
     steps =[]
@@ -119,6 +134,17 @@ def aStarCalc(startNode, endNode, nodes, connections):
     return steps
 
 def stepCleanup(steps, endNode, connections):
+    """
+    Returns a list that contains the best path from the start node to the end node.
+
+    Accepts as Input:
+    
+    endNode: A string that contains the name of the end node.
+    
+    steps: A list with the nodes that the algorithm passed to go from the start node to de end node.
+    
+    connections: A datafrmae with the connection between two nodes in two columns
+    """
     steps.reverse()
     newSteps =[]
     for i in range(len(steps)):
@@ -138,6 +164,15 @@ def stepCleanup(steps, endNode, connections):
     return newSteps
 
 def run(startNode, endNode):
+    """
+    Returns a list that contains the best path from the start node to the end node.
+
+    Accepts as Inputs:
+    
+    startNode: A string that contains the name of the start node.
+    
+    endNode: A string that contains the name of the end node.
+    """
     nodeFile = "src/A_Star/Maps/SecondFloorG.csv"
     connectionFile = "src/A_Star/Maps/SecondFloorConnections.csv"
     connections = pd.read_csv(connectionFile)
