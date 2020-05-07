@@ -25,66 +25,13 @@ def heuristicCalc(nodes, endNode):
 def graphMap(nodes, connections):
     grafo = nx.Graph()
     fig, ax = plt.subplots()
-
-    print(nodes.iloc[0,:])
-    grafo.add_node("A", pos=(1, 11))
-    grafo.add_node("B", pos=(4, 11))
-    grafo.add_node("C", pos=(16, 11))
-    grafo.add_node("D", pos=(1, 7))
-    grafo.add_node("E", pos=(4, 7))
-    grafo.add_node("F", pos=(13, 7))
-    grafo.add_node("G", pos=(19, 7))
-    grafo.add_node("H", pos=(1, 5))
-    grafo.add_node("I", pos=(4, 5))
-    grafo.add_node("J", pos=(16, 5))
-    grafo.add_node("K", pos=(19, 5))
-    grafo.add_node("L", pos=(4, 1))
-    grafo.add_node("M", pos=(13, 1))
-    grafo.add_node("N", pos=(19, 1))
-    grafo.add_node("a", pos=(1, 9))
-    grafo.add_node("b", pos=(4, 9))
-    grafo.add_node("c", pos=(7, 9))
-    grafo.add_node("d", pos=(10, 9))
-    grafo.add_node("e", pos=(13, 9))
-    grafo.add_node("f", pos=(16, 9))
-    grafo.add_node("g", pos=(19, 9))
-    grafo.add_node("h", pos=(1, 3))
-    grafo.add_node("i", pos=(4, 3))
-    grafo.add_node("j", pos=(7, 3))
-    grafo.add_node("k", pos=(10, 3))
-    grafo.add_node("l", pos=(13, 3))
-    grafo.add_node("m", pos=(16, 3))
-    grafo.add_node("n", pos=(19, 3))
-
-    grafo.add_edge("A", "a")
-    grafo.add_edge("B", "b")
-    grafo.add_edge("C", "f")
-    grafo.add_edge("D", "a")
-    grafo.add_edge("E", "b")
-    grafo.add_edge("F", "e")
-    grafo.add_edge("G", "g")
-    grafo.add_edge("H", "h")
-    grafo.add_edge("I", "i")
-    grafo.add_edge("J", "m")
-    grafo.add_edge("K", "n")
-    grafo.add_edge("L", "i")
-    grafo.add_edge("M", "l")
-    grafo.add_edge("N", "n")
-    grafo.add_edge("a", "b")
-    grafo.add_edge("b", "c")
-    grafo.add_edge("c", "d")
-    grafo.add_edge("c", "j")
-    grafo.add_edge("d", "k")
-    grafo.add_edge("d", "e")
-    grafo.add_edge("e", "f")
-    grafo.add_edge("g", "f")
-    grafo.add_edge("h", "i")
-    grafo.add_edge("i", "j")
-    grafo.add_edge("L", "i")
-    grafo.add_edge("j", "k")
-    grafo.add_edge("k", "l")
-    grafo.add_edge("l", "m")
-    grafo.add_edge("m", "n")
+    nodeNames = nodes.index
+    for i in range(nodes.index.size):
+        coor = nodes.iloc[i,:].values.tolist()
+        grafo.add_node(nodeNames[i], pos=(coor[0], coor[1]))
+    for i in range(connections.index.size):
+        conNodes = connections.iloc[i,:].values.tolist()
+        grafo.add_edge(conNodes[0], conNodes[1])
 
     pos = nx.get_node_attributes(grafo, 'pos')
 
@@ -92,6 +39,7 @@ def graphMap(nodes, connections):
     limits = plt.axis('on')
     ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
     plt.show()
+
 
 def aStarCalc(startNode, endNode, nodes, connections):
     """
@@ -177,7 +125,7 @@ def run(startNode, endNode):
     connectionFile = "src/A_Star/Maps/SecondFloorConnections.csv"
     connections = pd.read_csv(connectionFile)
     nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
-
+    graphMap(nodes,connections)
 
     nodes = heuristicCalc(nodes, endNode)
     nodes.columns =  ['X', 'Y', 'H']
