@@ -20,11 +20,11 @@ def heuristicCalc(nodes, endNode):
     nodes[dist] = distance
     return nodes
     
-def graphMap():
+def graphMap(nodes, connections):
     grafo = nx.Graph()
     fig, ax = plt.subplots()
 
-
+    #print(nodes.iloc[0,:])
     grafo.add_node("A", pos=(1, 11))
     grafo.add_node("B", pos=(4, 11))
     grafo.add_node("C", pos=(16, 11))
@@ -91,41 +91,73 @@ def graphMap():
     ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
     plt.show()
 
-def fCalc():
-    None
+def aStarCalc(startNode, endNode, nodes, connections):
+    openNodes = [startNode]
+    closedNodes = []
+    steps =[]
+    endReached = False
+    while not endReached:
+        current = nodes.loc[openNodes, :]['F'].idxmin()
+        steps.append(current)
+        openNodes.remove(current)
+        closedNodes.append(current)
+        if current == endNode:
+            break
+        for neighbor in connections.loc[connections['Node2'] == current, 'Node1'].values.tolist():
+            # print("OpenNodes: ")
+            # print(openNodes)
+            # print("Neighbor of " + current + " is: " + neighbor)
+            try:
+                closedNodes.index(neighbor)
+                continue
+            except:
+                None
+            try:
+                openNodes.index(neighbor)
+            except:
+                openNodes.append(neighbor)
+    return steps
 
-nodeFile = "src/A_Star/Maps/SecondFloorG.csv"
-connectionFile = "src/A_Star/Maps/SecondFloorConnections.csv"
-connections = pd.read_csv(connectionFile)
-nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
-
-startNode = 'j'
-endNode = 'N'
-
-nodes = heuristicCalc(nodes, endNode)
-nodes.columns =  ['X', 'Y', 'H']
-nodes = heuristicCalc(nodes, startNode)
-nodes.columns = ['X', 'Y', 'H', 'G']
-nodes['F'] = nodes['H'] + nodes['G']
-
-
-openNodes = [startNode]
-closedNodes = ['i']
-endReached = False
-while not endReached:
-    current = nodes.loc[openNodes, :]['F'].idxmin()
-    openNodes.remove(current)
-    closedNodes.append(current)
-    if current == endNode:
-        break
-    for neighbor in connections.loc[connections['Node2'] == current, 'Node1'].values.tolist():
-        try:
-            closedNodes.index(neighbor)
+def stepCleanup(steps, endNode, connections):
+    steps.reverse()
+    newSteps =[]
+    for i in range(len(steps)):
+        if steps[i] == endNode:
+            newSteps.append(steps[i])
             continue
-        except:
-            None
+        
+        # if steps[i] is in neighbors of steps[i-1], add to new steps, do nothing
 
-    endReached = True
+        for neighbor in connections.loc[connections['Node2'] == newSteps[-1], 'Node1'].values.tolist():
+            # print(steps[i-1])
+            # print(neighbor)
+            if neighbor == steps[i]:
+                newSteps.append(steps[i])
+                break
+    newSteps.reverse()
+    return newSteps
+
+def run(startNode, endNode):
+    nodeFile = "src/A_Star/Maps/SecondFloorG.csv"
+    connectionFile = "src/A_Star/Maps/SecondFloorConnections.csv"
+    connections = pd.read_csv(connectionFile)
+    nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
+
+
+    nodes = heuristicCalc(nodes, endNode)
+    nodes.columns =  ['X', 'Y', 'H']
+    nodes = heuristicCalc(nodes, startNode)
+    nodes.columns = ['X', 'Y', 'H', 'G']
+    nodes['F'] = nodes['H'] + nodes['G']
+    steps = aStarCalc(startNode, endNode, nodes, connections)
+    steps = stepCleanup(steps,endNode,connections)
+    return steps
+
+test = run('A', 'N')
+print(test)
+    
+
+
 
 
 
