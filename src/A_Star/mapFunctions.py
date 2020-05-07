@@ -40,7 +40,6 @@ def graphMap(nodes, connections):
     ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
     plt.show()
 
-
 def aStarCalc(startNode, endNode, nodes, connections):
     """
     Returns a list with the nodes that the algorithm passed to go from the start node to de end node.
