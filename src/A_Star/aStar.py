@@ -18,20 +18,27 @@ def heuristicCalc(nodes, endNode):
     nodes_sub = [(nodes['X'] - endCoor[0]).values.tolist(), (nodes['Y'] - endCoor[1]).values.tolist()]
     nodes_sub = [[nodes_sub[0][i], nodes_sub[1][i] ]for i in range(len(nodes_sub[0]))]
     distance = [math.hypot(sub[0], sub[1])for sub in nodes_sub]
-    dist = "Distance with " + endNode
+    dist = "Distance with " + str(endNode)
     nodes[dist] = distance
     return nodes
     
-def graphMap(nodes, connections):
+def graphMap(nodes, *connections):
     grafo = nx.Graph()
     fig, ax = plt.subplots()
     nodeNames = nodes.index
     for i in range(nodes.index.size):
         coor = nodes.iloc[i,:].values.tolist()
         grafo.add_node(nodeNames[i], pos=(coor[0], coor[1]))
-    for i in range(connections.index.size):
-        conNodes = connections.iloc[i,:].values.tolist()
-        grafo.add_edge(conNodes[0], conNodes[1])
+
+    if not connections:
+        print(type(connections))
+    else:
+        connections = connections[0]
+        for i in range(connections.index.size):
+            conNodes = connections.iloc[i,:].values.tolist()
+            grafo.add_edge(conNodes[0], conNodes[1])
+
+
 
     pos = nx.get_node_attributes(grafo, 'pos')
 
@@ -124,7 +131,6 @@ def run(startNode, endNode):
     connectionFile = "src/A_Star/Maps/SecondFloorConnections.csv"
     connections = pd.read_csv(connectionFile)
     nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
-
     nodes = heuristicCalc(nodes, endNode)
     nodes.columns =  ['X', 'Y', 'H']
     nodes = heuristicCalc(nodes, startNode)
@@ -133,18 +139,3 @@ def run(startNode, endNode):
     steps = aStarCalc(startNode, endNode, nodes, connections)
     steps = stepCleanup(steps,endNode,connections)
     return steps
-
-test = run('A', 'N')
-print(test)
-    
-
-
-
-
-
-
-
-
-
-
-
