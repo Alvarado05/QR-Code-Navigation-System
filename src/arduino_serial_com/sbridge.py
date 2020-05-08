@@ -1,13 +1,30 @@
 import serial
-ser = serial.Serial('com5', 9600)
+import time
 
-def getValues():
-    ser.write('d')
-    arduinoData = ser.readline().decode('ascii')
-    return arduinoData
+ser = serial.Serial('COM5', baudrate = 9600, timeout = 1)
 
-while (1):
-    userInput = input('Get data point?')
 
-    if userInput == 'y':
-        print(getValues())
+def getSensorInfo():
+    while(1):
+        ser.write(b'd\n')                   # sending a d with endline to the arduino serial
+        time.sleep(.5)                      # the frequency of the samples for the sensors to adquiere the info
+
+        arduinoData = ser.read_until("\n").decode('ascii')        # reading the info from arduino and decoding it (ascii)
+        print(arduinoData)                                        # priting the arduino serial (sensors info)
+
+  
+getSensorInfo();
+
+# def getValues():
+    
+#     ser.write(b'd')
+#     arduinoData = ser.readline().decode('ascii')
+#     return arduinoData
+
+
+# while(1):
+
+#     userInput = input('Get data point?')
+
+#     if userInput == 'y':
+#         print(getValues())
