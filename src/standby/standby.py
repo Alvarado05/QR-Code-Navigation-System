@@ -6,7 +6,7 @@ def standBy(nodes):
 
     Accepts as inputs:
 
-    nodes: DataFrame that have all the nodes of the graph.
+    nodes: A dataframe with the nodes as index names and X,Y as columns
     """
     nodes = nodes.index.tolist()
     print(nodes)

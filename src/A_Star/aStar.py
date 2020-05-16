@@ -70,7 +70,7 @@ def stepCleanup(steps, endNode, connections):
     
     steps: A list with the nodes that the algorithm passed to go from the start node to de end node.
     
-    connections: A datafrmae with the connection between two nodes in two columns
+    connections: A dataframe with the connection between two nodes in two columns
     """
     steps.reverse()
     newSteps =[]
@@ -99,6 +99,10 @@ def run(startNode, endNode, nodes, connections):
     startNode: A string that contains the name of the start node.
     
     endNode: A string that contains the name of the end node.
+
+    connections: A dataframe with the connection between two nodes in two columns
+
+    nodes: A dataframe with the nodes as index names and X,Y as columns
     """
     nodes = heuristicCalc(nodes, endNode)
     nodes.columns =  ['X', 'Y', 'H']
