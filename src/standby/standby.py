@@ -1,7 +1,13 @@
 import pandas as pd
 
-def standBy(nodeFile):
-    nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
+def standBy(nodes):
+    """
+    Returns a list with the start node and the end node after the user enter a existent start node end end node. If the user enter a "*", the function will return a delivery confirmation
+
+    Accepts as inputs:
+
+    nodes: DataFrame that have all the nodes of the graph.
+    """
     nodes = nodes.index.tolist()
     print(nodes)
     while True:
