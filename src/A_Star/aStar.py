@@ -1,7 +1,5 @@
 import pandas as pd
 import math
-import networkx as nx
-import matplotlib.pyplot as plt
 
 def heuristicCalc(nodes, endNode):
     """
@@ -21,31 +19,6 @@ def heuristicCalc(nodes, endNode):
     dist = "Distance with " + str(endNode)
     nodes[dist] = distance
     return nodes
-    
-def graphMap(nodes, *connections):
-    grafo = nx.Graph()
-    fig, ax = plt.subplots()
-    nodeNames = nodes.index
-    for i in range(nodes.index.size):
-        coor = nodes.iloc[i,:].values.tolist()
-        grafo.add_node(nodeNames[i], pos=(coor[0], coor[1]))
-
-    if not connections:
-        print(type(connections))
-    else:
-        connections = connections[0]
-        for i in range(connections.index.size):
-            conNodes = connections.iloc[i,:].values.tolist()
-            grafo.add_edge(conNodes[0], conNodes[1])
-
-
-
-    pos = nx.get_node_attributes(grafo, 'pos')
-
-    nx.draw(grafo, pos, with_labels=True)
-    limits = plt.axis('on')
-    ax.tick_params(left=True, bottom=True, labelleft=True, labelbottom=True)
-    plt.show()
 
 def aStarCalc(startNode, endNode, nodes, connections):
     """
@@ -117,7 +90,7 @@ def stepCleanup(steps, endNode, connections):
     newSteps.reverse()
     return newSteps
 
-def run(startNode, endNode):
+def run(startNode, endNode, nodes, connections):
     """
     Returns a list that contains the best path from the start node to the end node.
 
@@ -127,10 +100,6 @@ def run(startNode, endNode):
     
     endNode: A string that contains the name of the end node.
     """
-    nodeFile = "src/A_Star/Maps/SecondFloorG.csv"
-    connectionFile = "src/A_Star/Maps/SecondFloorConnections.csv"
-    connections = pd.read_csv(connectionFile)
-    nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
     nodes = heuristicCalc(nodes, endNode)
     nodes.columns =  ['X', 'Y', 'H']
     nodes = heuristicCalc(nodes, startNode)
