@@ -1,8 +1,6 @@
 import pandas as pd
 
-def standBy():
-    nodeFile = "src/A_Star/Maps/SecondFloorG.csv"
-    nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
+def standBy(nodes):
     nodes = nodes.index.tolist()
     print(nodes)
     while True:
