@@ -35,6 +35,3 @@ def standBy():
                 return missionNodes
             else:
                 return "Invalid Nodes"
-
-
-print(standBy())
