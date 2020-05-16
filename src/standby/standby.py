@@ -1,8 +1,7 @@
 import pandas as pd
 
-def standBy():
-    nodeFile = "src/A_Star/Maps/SecondFloorG.csv"
-    nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
+def standBy(nodesFile):
+    nodes = pd.read_csv(nodesFile, index_col = 'Nodes')
     nodes = nodes.index.tolist()
     print(nodes)
     while True:
@@ -37,4 +36,6 @@ def standBy():
                 return "Invalid Nodes"
 
 
-print(standBy())
+nodeFile = "src/A_Star/Maps/SecondFloorG.csv"
+
+print(standBy(nodeFile))
