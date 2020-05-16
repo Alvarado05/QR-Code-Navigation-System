@@ -100,6 +100,8 @@ def run(startNode, endNode, nodes, connections):
     
     endNode: A string that contains the name of the end node.
     """
+    nodes = pd.DataFrame.copy(nodes)
+    connections = pd.DataFrame.copy(connections)
     nodes = heuristicCalc(nodes, endNode)
     nodes.columns =  ['X', 'Y', 'H']
     nodes = heuristicCalc(nodes, startNode)
