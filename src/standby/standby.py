@@ -1,7 +1,6 @@
 import pandas as pd
 
-def standBy():
-    nodeFile = "src/A_Star/Maps/SecondFloorG.csv"
+def standBy(nodeFile):
     nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
     nodes = nodes.index.tolist()
     print(nodes)
@@ -35,6 +34,3 @@ def standBy():
                 return missionNodes
             else:
                 return "Invalid Nodes"
-
-
-print(standBy())
