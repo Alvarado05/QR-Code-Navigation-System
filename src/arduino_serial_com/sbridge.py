@@ -1,7 +1,7 @@
 import serial
 import time
 
-ser = serial.Serial('COM5', baudrate = 9600, timeout = 1)
+ser = serial.Serial('COM5', baudrate = 9600, timeout = 1)   # Setup for the arduino communication
 
 
 def getSensorInfo():
