@@ -1,4 +1,4 @@
-import serial
+import serial       # pip install serial, pip install pyserial
 import time
 
 ser = serial.Serial('COM5', baudrate = 9600, timeout = 1)   # Setup for the arduino communication
