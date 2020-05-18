@@ -39,6 +39,7 @@ def qrScanner():
 
         if qrIDs != "":
             return qrIDs
+    return None
             
 def qrGenerator(qrValue, qrName):
     """This function receive two string parameters, first one is the value of the wanted QR code and the second one is the name of the QR code image (Example: 'QR.png')"""

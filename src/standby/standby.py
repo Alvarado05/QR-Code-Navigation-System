@@ -1,6 +1,6 @@
 import pandas as pd
 
-def standBy(nodes):
+def run(nodes):
     nodes = nodes.index.tolist()
     print(nodes)
     while True:
