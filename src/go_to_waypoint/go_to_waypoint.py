@@ -14,8 +14,11 @@ from qr_code import QRCodeFunctions as qrf
 import math
 
 def move(ser, leftV, rightV):
-    ser.write(b'v,'+ str(leftV) + ',' + str(rightV) +'\n') 
-    
+    concatenation = 'v,'+ str(leftV) + ',' + str(rightV) +'\n'
+    ser.write(bytes(concatenation, 'ascii')) 
+
+def stop(ser):
+    ser.write(b's\n')
 def read(ser, slp):
     ser.write(b'd\n')
     time.sleep(slp)
@@ -24,7 +27,7 @@ def read(ser, slp):
     arduinoData = arduinoData.splitlines()
     for i in range(len(arduinoData)):
             splitedList.append(arduinoData[i].split(','))   # priting the arduino serial (sensors info)
-    dataDict = {j[0]:j[1:] for j in splitedList}
+    dataDict = {j[0]:[float(i) for i in j[1:]]  for j in splitedList}
     return dataDict                                         # priting the arduino serial (sensors info)
 
 
@@ -32,7 +35,9 @@ def run(comChannel, orientation, tolerance, velocity):
 
     ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = 1)   # Setup for the arduino communication
     data = read(ser, .01)
+
     cur_orientation = data['IMU'][-1]
+    print(data)
 
     # while orientation is not right, rotate
     while cur_orientation <= (orientation - tolerance) or cur_orientation >= (orientation + tolerance):
@@ -40,17 +45,19 @@ def run(comChannel, orientation, tolerance, velocity):
         if angle_between < 0:
             angle_between += 2*math.pi
         if angle_between <= math.pi:
-            move(ser, velocity*-1,velocity)
+            move(ser, velocity,velocity*(-1))
         elif angle_between > math.pi:
-            move(ser,velocity,velocity*-1)
-    move(ser,0,0)
-    time.sleep(20)
+            move(ser,velocity*(-1),velocity)
+        data = read(ser, .01)
+        cur_orientation = data['IMU'][-1]
+        # print(cur_orientation)
+    stop(ser)
     
     scan = qrf.qrScanner()                              # scan qrCode
     while scan == None:                                 # while qrcode not present
         move(ser,velocity, velocity)                    #   Move forward
         scan = qrf.qrScanner()                          #   scan qrCode
-    move(ser,0, 0)                         # stop
+    stop(ser)                         # stop
     return scan
 
 

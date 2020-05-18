@@ -21,5 +21,6 @@ while nodes == "Invalid Nodes" or nodes == "Delivered":
 steps = aStar.run(nodes[0], nodes[1], nodes_df, connections_df)
 directions = gf.stepsToCardinality(steps, nodes_df)
 directions = gf.cardToOrientation(directions,DIREC_DICT)
-gtw.run('COM5', 1.57, .1, 50)
+scan = gtw.run('/dev/ttyACM0', 1.57, .1, 50)
+print(scan)
 
