@@ -12,6 +12,7 @@ import serial       # pip install serial, pip install pyserial
 import time
 from qr_code import QRCodeFunctions as qrf
 import math
+import obstacle_avoidance as oa
 
 def move(ser, leftV, rightV):
     concatenation = 'v,'+ str(leftV) + ',' + str(rightV) +'\n'
@@ -41,9 +42,9 @@ def alignOrientation(ser, velocity, start_orientation, final_orientation):
     return None
 
 def run(comChannel, orientation, tolerance, velocity):
-
+    sleep_time = .01
     ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = 1)   # Setup for the arduino communication
-    data = read(ser, .01)
+    data = read(ser, sleep_time)
     min_orientation = orientation - tolerance
     max_orientation = orientation + tolerance
 
@@ -65,16 +66,21 @@ def run(comChannel, orientation, tolerance, velocity):
     # while orientation is not right, rotate
     while cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation):
         alignOrientation(ser, velocity, cur_orientation, orientation)
-        data = read(ser, .01)
+        data = read(ser, sleep_time)
         cur_orientation = data['IMU'][-1]
     
     stop(ser)
     
     scan = qrf.qrScanner()                              # scan qrCode
     while scan == None:                                 # while qrcode not present
-        move(ser,velocity, velocity)                    #   Move forward
-        scan = qrf.qrScanner()                          #   scan qrCode
+        checkObs = oa.check_obstacle(ser, sleep_time)
+        if checkObs == False:
+            move(ser,velocity, velocity)                    #   Move forward
+            scan = qrf.qrScanner()                          #   scan qrCode
+        elif checkObs == True:
+            stop(ser)
     stop(ser)                                           # stop
+    
     return scan
 
 
