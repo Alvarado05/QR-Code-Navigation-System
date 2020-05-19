@@ -46,24 +46,21 @@ def run(comChannel, orientation, tolerance, velocity):
     data = read(ser, .01)
     min_orientation = orientation - tolerance
     max_orientation = orientation + tolerance
-
+    
+    changeValue = False
     # if any of the two fall outside the rango of 0-360, convert them
     if min_orientation  < 0:
         min_orientation = min_orientation + (2*math.pi)
-        temp = min_orientation
-        min_orientation = max_orientation
-        max_orientation = temp
+        changeValue = True
     elif max_orientation > 360:
-        max_orientation = max_orientation + (2*math.pi)
-        temp = min_orientation
-        min_orientation = max_orientation
-        max_orientation = temp
+        max_orientation = max_orientation - (2*math.pi)
+        changeValue = True
     
     cur_orientation = data['IMU'][-1]
     print(data)
 
     # while orientation is not right, rotate
-    while cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation):
+    while ((cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)) and not changeValue) or (changeValue and (cur_orientation > max_orientation and cur_orientation < min_orientation)):
         alignOrientation(ser, velocity, cur_orientation, orientation)
         data = read(ser, .01)
         cur_orientation = data['IMU'][-1]

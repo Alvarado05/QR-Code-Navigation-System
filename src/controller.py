@@ -24,8 +24,11 @@ directions = gf.stepsToCardinality(steps, nodes_df)
 directions = gf.cardToOrientation(directions,DIREC_DICT)
 tolerance = .1
 velocity = 50
-for direction in directions:
-    waypoint = gtw.run(COMPORT, direction, tolerance, velocity)
-    print(waypoint)
+# for direction in directions:
+waypoint = gtw.run(COMPORT, directions[0], tolerance, velocity)
+    # print(waypoint)
+
+
+
 
 
