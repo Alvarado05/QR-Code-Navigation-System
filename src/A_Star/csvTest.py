@@ -15,8 +15,8 @@ def loadCSVFiles():
     global CONNECTIONS
     global NODES
 
-    FILE_NODE = "src/A_Star/Maps/SecondFloorG.csv"
-    FILE_CONNECTION = "src/A_Star/Maps/SecondFloorConnections.csv"
+    FILE_NODE = "src/A_Star/Maps/CarlosSecondFloor.csv"
+    FILE_CONNECTION = "src/A_Star/Maps/CarlosSecondFloorConnections.csv"
     CONNECTIONS = pd.read_csv(FILE_CONNECTION)
     NODES = pd.read_csv(FILE_NODE, index_col = 'Nodes')
 
