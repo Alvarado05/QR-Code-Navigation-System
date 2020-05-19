@@ -27,6 +27,7 @@ def read(ser, slp):
     arduinoData = arduinoData.splitlines()
     for i in range(len(arduinoData)):
             splitedList.append(arduinoData[i].split(','))   # priting the arduino serial (sensors info)
+    print(splitedList)
     dataDict = {j[0]:[float(i) for i in j[1:]]  for j in splitedList}
     return dataDict                                         # priting the arduino serial (sensors info)
 
@@ -60,13 +61,13 @@ def run(comChannel, orientation, tolerance, velocity):
         max_orientation = temp
     
     cur_orientation = data['IMU'][-1]
-    print(data)
 
     # while orientation is not right, rotate
     while cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation):
         alignOrientation(ser, velocity, cur_orientation, orientation)
         data = read(ser, .01)
         cur_orientation = data['IMU'][-1]
+        print(cur_orientation)
     
     stop(ser)
     
