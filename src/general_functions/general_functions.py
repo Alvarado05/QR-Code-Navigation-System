@@ -52,3 +52,14 @@ def cardToOrientation(cardinalitites, direcDict):
             if i == j:
                 converted.append(direcDict[j])
     return converted
+
+def northToCardinal(north):
+    # recibe el norte en radianes y la tolerancia del angulo mas pequeno y mas grande
+    # debe regresar un diccionario con los puntos cardinales calculados con respecto a ese norte
+    Dict = {'N':round(north, 3), 'E': round(north + 3*(math.pi/2), 3), 'S': round(north + math.pi, 3), 'W': round(north + (math.pi/2), 3)}
+
+    for i in Dict.keys():
+        if Dict[i] > math.pi*2:
+            Dict[i] = round(Dict[i] - math.pi*2, 3)
+            
+    return Dict

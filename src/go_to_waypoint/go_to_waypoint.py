@@ -30,34 +30,51 @@ def read(ser, slp):
     dataDict = {j[0]:[float(i) for i in j[1:]]  for j in splitedList}
     return dataDict                                         # priting the arduino serial (sensors info)
 
+def alignOrientation(ser, velocity, start_orientation, final_orientation):
+    angle_between = start_orientation-final_orientation
+    if angle_between < 0:
+        angle_between += 2*math.pi
+    if angle_between <= math.pi:
+        move(ser, velocity,velocity*(-1))
+    elif angle_between > math.pi:
+        move(ser,velocity*(-1),velocity)
+    return None
 
 def run(comChannel, orientation, tolerance, velocity):
 
     ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = 1)   # Setup for the arduino communication
     data = read(ser, .01)
+    min_orientation = orientation - tolerance
+    max_orientation = orientation + tolerance
 
+    # if any of the two fall outside the rango of 0-360, convert them
+    if min_orientation  < 0:
+        min_orientation = min_orientation + (2*math.pi)
+        temp = min_orientation
+        min_orientation = max_orientation
+        max_orientation = temp
+    elif max_orientation > 360:
+        max_orientation = max_orientation + (2*math.pi)
+        temp = min_orientation
+        min_orientation = max_orientation
+        max_orientation = temp
+    
     cur_orientation = data['IMU'][-1]
     print(data)
 
     # while orientation is not right, rotate
-    while cur_orientation <= (orientation - tolerance) or cur_orientation >= (orientation + tolerance):
-        angle_between = cur_orientation-orientation
-        if angle_between < 0:
-            angle_between += 2*math.pi
-        if angle_between <= math.pi:
-            move(ser, velocity,velocity*(-1))
-        elif angle_between > math.pi:
-            move(ser,velocity*(-1),velocity)
+    while cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation):
+        alignOrientation(ser, velocity, cur_orientation, orientation)
         data = read(ser, .01)
         cur_orientation = data['IMU'][-1]
-        # print(cur_orientation)
+    
     stop(ser)
     
     scan = qrf.qrScanner()                              # scan qrCode
     while scan == None:                                 # while qrcode not present
         move(ser,velocity, velocity)                    #   Move forward
         scan = qrf.qrScanner()                          #   scan qrCode
-    stop(ser)                         # stop
+    stop(ser)                                           # stop
     return scan
 
 

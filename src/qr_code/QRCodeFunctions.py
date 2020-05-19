@@ -19,7 +19,7 @@ import pyqrcode
 from pyzbar.pyzbar import decode
 from PIL import Image
 
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(1)
 def qrScanner():
     """This function use the device webcam to scan QR codes, if the function does not detect a QR code returns a "None" value otherwise returns a string of the value in the QR code"""
     j = 0
