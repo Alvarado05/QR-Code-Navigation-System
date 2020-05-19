@@ -301,8 +301,8 @@ void imuInit() {
 
   magnetometer_accelerometer.init();
   magnetometer_accelerometer.enableDefault();
-  magnetometer_accelerometer.m_min = (LSM303::vector<int16_t>){ -2247,  -2068,  -1114};
-  magnetometer_accelerometer.m_max = (LSM303::vector<int16_t>){+3369,  +2877,  +3634};
+  magnetometer_accelerometer.m_min = (LSM303::vector<int16_t>){ -2518,  -3076,  -2364};
+  magnetometer_accelerometer.m_max = (LSM303::vector<int16_t>){+4130,  +2147,  +2799};
   magnetometer_accelerometer.setTimeout(1);
 
   pressure.init();
