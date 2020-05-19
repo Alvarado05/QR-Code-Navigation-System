@@ -1,8 +1,6 @@
 import pandas as pd
 
-def standBy():
-    nodeFile = "src/A_Star/Maps/SecondFloorG.csv"
-    nodes = pd.read_csv(nodeFile, index_col = 'Nodes')
+def run(nodes):
     nodes = nodes.index.tolist()
     print(nodes)
     while True:
@@ -35,6 +33,3 @@ def standBy():
                 return missionNodes
             else:
                 return "Invalid Nodes"
-
-
-print(standBy())
