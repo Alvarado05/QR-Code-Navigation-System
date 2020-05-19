@@ -32,7 +32,10 @@ def stepsToCardinality(steps, nodes):
                     cardinality.append('W')
 
             else:
-                print("It moves in bothe x and y")
+                print("It moves in both x and y")
+                print(sub)
+                print(last_step)
+                print(step)
         last_step = step
     return cardinality
 
