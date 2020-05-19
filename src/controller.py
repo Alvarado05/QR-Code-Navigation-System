@@ -25,8 +25,11 @@ directions = gf.cardToOrientation(directions, DIRECT_DICT)
 # print(directions)
 tolerance = 0.05
 velocity = 50
-for direction in directions:
-    waypoint = gtw.run(COMPORT, 4.544, tolerance, velocity)
+# for direction in directions:
+waypoint = gtw.run(COMPORT, directions[0], tolerance, velocity)
     # print(waypoint)
+
+
+
 
 
