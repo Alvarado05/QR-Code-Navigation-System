@@ -9,7 +9,7 @@ NODE_FILE = "src/A_Star/Maps/CarlosSecondFloor.csv"
 CONNECTION_FILE = "src/A_Star/Maps/CarlosSecondFloorConnections.csv"
 NORTH =6.115
 DIRECT_DICT = gf.northToCardinal(NORTH)
-COMPORT = '/dev/ttyACM2'
+COMPORT = '/dev/ttyACM0'
 nodes_df = pd.read_csv(NODE_FILE, index_col='Nodes')
 connections_df = pd.read_csv(CONNECTION_FILE)
 print(DIRECT_DICT)
