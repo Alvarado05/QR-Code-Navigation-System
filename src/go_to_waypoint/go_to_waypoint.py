@@ -47,6 +47,8 @@ def run(comChannel, orientations, steps, tolerance, velocity):
     i = len(orientations)
     i2 = 0
     while i2 < i :
+        print(orientations[i2])
+        print(steps[i2])
         min_orientation = orientations[i2] - tolerance
         max_orientation = orientations[i2] + tolerance
         
