@@ -57,7 +57,7 @@ def run(comChannel, orientations, steps, tolerance, velocity):
         if min_orientation  < 0:
             min_orientation = min_orientation + (2*math.pi)
             changeValue = True
-        elif max_orientation > 360:
+        elif max_orientation > 2*math.pi:
             max_orientation = max_orientation - (2*math.pi)
             changeValue = True
         
