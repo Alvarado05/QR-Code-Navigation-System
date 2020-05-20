@@ -42,6 +42,15 @@ def alignOrientation(ser, velocity, start_orientation, final_orientation):
         move(ser,velocity*(-1),velocity)
     return None
 
+def checkRange(degree):
+    if degree  < 0:
+        degree = degree + (2*math.pi)
+    elif degree > (2 * math.pi):
+        degree = degree - (2*math.pi)
+
+    return degree
+
+
 def run(comChannel, orientation, tolerance, velocity):
     sleep_time = .01
     ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = 1)   # Setup for the arduino communication
@@ -49,14 +58,15 @@ def run(comChannel, orientation, tolerance, velocity):
     min_orientation = orientation - tolerance
     max_orientation = orientation + tolerance
     
-    changeValue = False
+    change_value = False
     # if any of the two fall outside the rango of 0-360, convert them
-    if min_orientation  < 0:
-        min_orientation = min_orientation + (2*math.pi)
-        changeValue = True
-    elif max_orientation > 360:
-        max_orientation = max_orientation - (2*math.pi)
-        changeValue = True
+    min_orientation2 = checkRange(min_orientation)
+    max_orientation2 = checkRange(max_orientation)
+
+    if(min_orientation2 != min_orientation2 or max_orientation != max_orientation2):
+        change_value = True
+        min_orientation = min_orientation2
+        max_orientation = max_orientation2
     
     cur_orientation = data['IMU'][-1]
 
@@ -77,6 +87,7 @@ def run(comChannel, orientation, tolerance, velocity):
             scan = qrf.qrScanner()                          #   scan qrCode
         elif checkObs == True:
             stop(ser)
+            # Obs avoidance
     stop(ser)                                           # stop
     
     return scan
