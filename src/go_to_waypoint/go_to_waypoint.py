@@ -43,7 +43,7 @@ def alignOrientation(ser, velocity, start_orientation, final_orientation):
 
 def run(comChannel, orientations, steps, tolerance, velocity):
 
-    ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = .06)   # Setup for the arduino communication
+    ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = .08)   # Setup for the arduino communication
     i = len(orientations)
     i2 = 0
     while i2 < i :
