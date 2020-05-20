@@ -65,12 +65,19 @@ def run(comChannel, orientations, steps, tolerance, velocity):
         cur_orientation = data['IMU'][-1]
 
         # while orientation is not right, rotate
-        while ((cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)) and not changeValue) or (changeValue and (cur_orientation > max_orientation and cur_orientation < min_orientation)):
-            alignOrientation(ser, velocity, cur_orientation, orientations[i2])
-            data = read(ser, .0001)
-            cur_orientation = data['IMU'][-1]
-            print(cur_orientation)
-        
+        if changeValue == False:
+            while (cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)):
+                alignOrientation(ser, velocity, cur_orientation, orientations[i2])
+                data = read(ser, .0001)
+                cur_orientation = data['IMU'][-1]
+                print(cur_orientation)
+        else: 
+            while (cur_orientation > max_orientation and cur_orientation < min_orientation):
+                alignOrientation(ser, velocity, cur_orientation, orientations[i2])
+                data = read(ser, .0001)
+                cur_orientation = data['IMU'][-1]
+                print(cur_orientation)
+                
         stop(ser)
         
         scan = qrf.qrScanner()                              # scan qrCode
