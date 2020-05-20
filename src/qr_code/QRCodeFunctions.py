@@ -28,13 +28,14 @@ def qrScanner():
     while j < 30:
         _, frame = camera.read()
 
-        qrDecode = pyzbar.decode(frame)
+        gray = cv2.cvtColor(frame[100:250, 240:390], cv2.COLOR_BGR2GRAY)
+        qrDecode = pyzbar.decode(gray)
         for i in qrDecode:
 
             qrID = i.data
             qrIDs = qrID.decode("utf-8")
 
-        cv2.imshow("Camera", frame)
+        # cv2.imshow("Camera", gray)
         j = j + 1
 
         if qrIDs != "":
