@@ -7,7 +7,7 @@ from go_to_waypoint import go_to_waypoint as gtw
 import pandas as pd
 NODE_FILE = "src/A_Star/Maps/CarlosSecondFloor.csv"
 CONNECTION_FILE = "src/A_Star/Maps/CarlosSecondFloorConnections.csv"
-NORTH =0
+NORTH =2.06
 DIRECT_DICT = gf.northToCardinal(NORTH)
 COMPORT = '/dev/ttyACM0'
 nodes_df = pd.read_csv(NODE_FILE, index_col='Nodes')
@@ -23,13 +23,17 @@ steps = aStar.run(nodes[0], nodes[1], nodes_df, connections_df)
 directions = gf.stepsToCardinality(steps, nodes_df)
 directions = gf.cardToOrientation(directions, DIRECT_DICT)
 # print(directions)
-tolerance = 1.75
+tolerance = 0.05
 velocity = 50
 i = len(directions)
 i2 = 0
 while i2 < i:
+    print('i2: ',i2)
+    print('steps: ',steps[i2])
     waypoint = gtw.run(COMPORT, directions[i2], tolerance, velocity)
     print("I SAW IT!!!!!!!",waypoint)
+    print(directions[i2])
+    waypoint = int(waypoint)
     if waypoint == steps[i2]:
         i2 = i2 +1
 # print(waypoint)
