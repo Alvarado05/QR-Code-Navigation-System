@@ -23,12 +23,13 @@ steps = aStar.run(nodes[0], nodes[1], nodes_df, connections_df)
 directions = gf.stepsToCardinality(steps, nodes_df)
 directions = gf.cardToOrientation(directions, DIRECT_DICT)
 # print(directions)
-tolerance = 0.05
+tolerance = 1.75
 velocity = 50
 i = len(directions)
 i2 = 0
 while i2 < i:
     waypoint = gtw.run(COMPORT, directions[i2], tolerance, velocity)
+    print("I SAW IT!!!!!!!",waypoint)
     if waypoint == steps[i2]:
         i2 = i2 +1
 # print(waypoint)
