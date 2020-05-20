@@ -21,11 +21,12 @@ while nodes == "Invalid Nodes" or nodes == "Delivered":
     nodes = standby.run(nodes_df)
 steps = aStar.run(nodes[0], nodes[1], nodes_df, connections_df)
 directions = gf.stepsToCardinality(steps, nodes_df)
+print(directions)
 directions = gf.cardToOrientation(directions, DIRECT_DICT)
 # print(directions)
 tolerance = 0.05
 velocity = 50
-
+steps = steps.pop(0)
 
 gtw.run(COMPORT, directions, steps, tolerance, velocity)
 
