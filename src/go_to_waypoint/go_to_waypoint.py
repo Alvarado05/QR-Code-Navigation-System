@@ -76,6 +76,8 @@ def run(comChannel, orientations, steps, tolerance, velocity):
         while scan == None and scan != steps[i2]:                                 # while qrcode not present
             move(ser,velocity, velocity)                    #   Move forward
             scan = qrf.qrScanner()                          #   scan qrCode
+            if scan != None:
+                scan = int(scan)
         stop(ser)                                           # stop
         i2 = i2 + 1
     return None
