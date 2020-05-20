@@ -41,38 +41,42 @@ def alignOrientation(ser, velocity, start_orientation, final_orientation):
         move(ser,velocity*(-1),velocity)
     return None
 
-def run(comChannel, orientation, tolerance, velocity):
+def run(comChannel, orientations, steps, tolerance, velocity):
 
     ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = .06)   # Setup for the arduino communication
-    data = read(ser, .0001)
-    min_orientation = orientation - tolerance
-    max_orientation = orientation + tolerance
-    
-    changeValue = False
-    # if any of the two fall outside the rango of 0-360, convert them
-    if min_orientation  < 0:
-        min_orientation = min_orientation + (2*math.pi)
-        changeValue = True
-    elif max_orientation > 360:
-        max_orientation = max_orientation - (2*math.pi)
-        changeValue = True
-    
-    cur_orientation = data['IMU'][-1]
-
-    # while orientation is not right, rotate
-    while ((cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)) and not changeValue) or (changeValue and (cur_orientation > max_orientation and cur_orientation < min_orientation)):
-        alignOrientation(ser, velocity, cur_orientation, orientation)
+    i = len(orientations)
+    i2 = 0
+    while i2 < i :
+        min_orientation = orientations[i2] - tolerance
+        max_orientation = orientations[i2] + tolerance
+        
+        changeValue = False
+        # if any of the two fall outside the rango of 0-360, convert them
+        if min_orientation  < 0:
+            min_orientation = min_orientation + (2*math.pi)
+            changeValue = True
+        elif max_orientation > 360:
+            max_orientation = max_orientation - (2*math.pi)
+            changeValue = True
+        
         data = read(ser, .0001)
         cur_orientation = data['IMU'][-1]
-        print(cur_orientation)
-    
-    stop(ser)
-    
-    scan = qrf.qrScanner()                              # scan qrCode
-    while scan == None:                                 # while qrcode not present
-        move(ser,velocity, velocity)                    #   Move forward
-        scan = qrf.qrScanner()                          #   scan qrCode
-    stop(ser)                                           # stop
-    return scan
+
+        # while orientation is not right, rotate
+        while ((cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)) and not changeValue) or (changeValue and (cur_orientation > max_orientation and cur_orientation < min_orientation)):
+            alignOrientation(ser, velocity, cur_orientation, orientations[i2])
+            data = read(ser, .0001)
+            cur_orientation = data['IMU'][-1]
+            print(cur_orientation)
+        
+        stop(ser)
+        
+        scan = qrf.qrScanner()                              # scan qrCode
+        while scan == None and int(scan) != steps[i2]:                                 # while qrcode not present
+            move(ser,velocity, velocity)                    #   Move forward
+            scan = qrf.qrScanner()                          #   scan qrCode
+        stop(ser)                                           # stop
+        i2 = i2 + 1
+    return None
 
 
