@@ -7,7 +7,7 @@ from go_to_waypoint import go_to_waypoint as gtw
 import pandas as pd
 NODE_FILE = "src/A_Star/Maps/CarlosSecondFloor.csv"
 CONNECTION_FILE = "src/A_Star/Maps/CarlosSecondFloorConnections.csv"
-NORTH =0
+NORTH =2.06
 DIRECT_DICT = gf.northToCardinal(NORTH)
 COMPORT = '/dev/ttyACM0'
 nodes_df = pd.read_csv(NODE_FILE, index_col='Nodes')
@@ -23,7 +23,7 @@ steps = aStar.run(nodes[0], nodes[1], nodes_df, connections_df)
 directions = gf.stepsToCardinality(steps, nodes_df)
 directions = gf.cardToOrientation(directions, DIRECT_DICT)
 # print(directions)
-tolerance = 1.75
+tolerance = 0.05
 velocity = 50
 
 
