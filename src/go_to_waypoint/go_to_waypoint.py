@@ -34,7 +34,7 @@ def read(ser, slp):
 def alignOrientation(ser, velocity, start_orientation, final_orientation):
     angle_between = start_orientation-final_orientation
     if angle_between < 0:
-        angle_between += 2*math.pi
+        angle_between = angle_between + 2*math.pi
     if angle_between <= math.pi:
         move(ser, velocity,velocity*(-1))
     elif angle_between > math.pi:
