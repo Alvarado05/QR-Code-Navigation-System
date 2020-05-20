@@ -21,7 +21,7 @@ def stop(ser):
     ser.write(b's\n')
 def read(ser, slp):
     ser.write(b'd\n')
-    time.sleep(slp)
+    # time.sleep(slp)
     splitedList = []                                        # the frequency of the samples for the sensors to adquiere the info
     arduinoData = ser.read_until("\n").decode('ascii')      # reading the info from arduino and decoding it (ascii)
     arduinoData = arduinoData.splitlines()
@@ -43,8 +43,8 @@ def alignOrientation(ser, velocity, start_orientation, final_orientation):
 
 def run(comChannel, orientation, tolerance, velocity):
 
-    ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = 1)   # Setup for the arduino communication
-    data = read(ser, .01)
+    ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = .06)   # Setup for the arduino communication
+    data = read(ser, .0001)
     min_orientation = orientation - tolerance
     max_orientation = orientation + tolerance
     
@@ -62,7 +62,7 @@ def run(comChannel, orientation, tolerance, velocity):
     # while orientation is not right, rotate
     while ((cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)) and not changeValue) or (changeValue and (cur_orientation > max_orientation and cur_orientation < min_orientation)):
         alignOrientation(ser, velocity, cur_orientation, orientation)
-        data = read(ser, .01)
+        data = read(ser, .0001)
         cur_orientation = data['IMU'][-1]
         print(cur_orientation)
     
