@@ -7,7 +7,7 @@ from go_to_waypoint import go_to_waypoint as gtw
 import pandas as pd
 NODE_FILE = "src/A_Star/Maps/CarlosSecondFloor.csv"
 CONNECTION_FILE = "src/A_Star/Maps/CarlosSecondFloorConnections.csv"
-NORTH =6.115
+NORTH =0
 DIRECT_DICT = gf.northToCardinal(NORTH)
 COMPORT = '/dev/ttyACM0'
 nodes_df = pd.read_csv(NODE_FILE, index_col='Nodes')
@@ -25,9 +25,9 @@ directions = gf.cardToOrientation(directions, DIRECT_DICT)
 # print(directions)
 tolerance = 0.05
 velocity = 50
-# for direction in directions:
-waypoint = gtw.run(COMPORT, directions[0], tolerance, velocity)
-    # print(waypoint)
+for direction in directions:
+    waypoint = gtw.run(COMPORT, direction, tolerance, velocity)
+# print(waypoint)
 
 
 
