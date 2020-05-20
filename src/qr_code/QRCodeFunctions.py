@@ -25,7 +25,7 @@ def qrScanner():
     j = 0
     qrIDs = ""
 
-    while j < 10:
+    while j < 30:
         _, frame = camera.read()
 
         qrDecode = pyzbar.decode(frame)
