@@ -109,4 +109,6 @@ def run(startNode, endNode, nodes, connections):
     nodes['F'] = nodes['H'] + nodes['G']
     steps = aStarCalc(startNode, endNode, nodes, connections)
     steps = stepCleanup(steps,endNode,connections)
+    for i in range(len(steps)):
+        steps[i] = str(steps[i])
     return steps
