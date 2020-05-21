@@ -37,8 +37,10 @@ def checkRange(degree):
     changeValue = False
     if degree  < 0:
         degree = degree + (2*math.pi)
+        changeValue = True
     elif degree > (2 * math.pi):
         degree = degree - (2*math.pi)
+        changeValue = True
     return degree , changeValue
 
 def changeOrientation(ser, velocity, start_orientation, final_orientation):
