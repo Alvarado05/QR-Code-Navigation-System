@@ -3,7 +3,7 @@ import serial
 
 def run(ser, hit_distance):
     data = gtw.read(ser, 121)
-
+    print(data)
     print(data['USSL'][-1])
     print(data['USSR'][-1])
     left = data['USSL'][-1]
