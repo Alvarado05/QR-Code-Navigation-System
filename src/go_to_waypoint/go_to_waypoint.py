@@ -47,10 +47,12 @@ def run(comChannel, orientations, steps, tolerance, velocity):
     i = len(orientations)
     i2 = 0
     while i2 < i :
-        print(orientations[i2])
-        print(steps[i2])
+        print("Orientation:", orientations[i2])
+        print("Steps:", steps[i2])
         min_orientation = orientations[i2] - tolerance
         max_orientation = orientations[i2] + tolerance
+        print("Min_orientation: ", min_orientation)
+        print("Max_orientaion: ", max_orientation)
         
         changeValue = False
         # if any of the two fall outside the rango of 0-360, convert them
@@ -60,9 +62,14 @@ def run(comChannel, orientations, steps, tolerance, velocity):
         elif max_orientation > 2*math.pi:
             max_orientation = max_orientation - (2*math.pi)
             changeValue = True
-        
+        print("Change Value: ", changeValue)
+        print("Min_orientation: ", min_orientation)
+        print("Max_orientaion: ", max_orientation)
+
         data = read(ser, .0001)
         cur_orientation = data['IMU'][-1]
+
+        print("Cur_orientation: ", cur_orientation)
 
         # while orientation is not right, rotate
         if changeValue == False:
