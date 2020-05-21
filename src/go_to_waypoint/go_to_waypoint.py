@@ -37,9 +37,11 @@ def checkRange(degree):
     changeValue = False
     if degree  < 0:
         degree = degree + (2*math.pi)
+        print("changed Value")
         changeValue = True
     elif degree > (2 * math.pi):
         degree = degree - (2*math.pi)
+        print("changed Value")
         changeValue = True
     return degree , changeValue
 
