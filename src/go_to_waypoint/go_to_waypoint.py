@@ -85,8 +85,8 @@ def run(comChannel, orientations, steps, tolerance, velocity):
     ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = 1)   # Setup for the arduino communication
     i = len(orientations)
     i2 = 0
-    hit_distance = 34
-    corr_angle = 0.174533
+    hit_distance = 30
+    corr_angle = 0.0872665
     while i2 < i :
 
         print("Orientation:", orientations[i2])
