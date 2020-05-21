@@ -3,34 +3,31 @@ import serial
 
 def run(ser, hit_distance, corr_angle, velocity, tolerance, v_decrease):
     data = gtw.read(ser, 121)
-    left = data['USSL'][-1]
-    right = data['USSR'][-1]
-    hit = True
-   
-    while hit == True:
-        data = gtw.read(ser, 121)
-        left = data['USSL'][-1]
-        right = data['USSR'][-1]
-        changeValue = False
+    side_left = data['USSL'][-1]
+    side_right = data['USSR'][-1]
+    center = data['USC'][-1]
+    left = data['USL'][-1]
+    right = data['USR'][-1]
 
-        if left < hit_distance and right > hit_distance:
-            final_orientation = data['IMU'][-1] - corr_angle
-            final_orientation, changeValue = gtw.checkRange(final_orientation)
-            gtw.alignOrientation(ser, velocity, final_orientation, tolerance, v_decrease)
-            print("We got a hit in the left")
+    if (side_left < hit_distance and side_right > hit_distance) or (left < hit_distance and right > hit_distance):
+        final_orientation = data['IMU'][-1] - corr_angle
+        final_orientation, changeValue = gtw.checkRange(final_orientation)
+        gtw.alignOrientation(ser, velocity, final_orientation, tolerance, v_decrease)
+        print("We got a hit in the left")
 
-        elif right < hit_distance and left > hit_distance:
-            final_orientation = data['IMU'][-1] + corr_angle
-            final_orientation, changeValue = gtw.checkRange(final_orientation)
-            gtw.alignOrientation(ser, velocity, final_orientation, tolerance, v_decrease)
-            print("We got a hit in the right")
+    elif (side_right < hit_distance and side_left > hit_distance) or (right < hit_distance and left > hit_distance):
+        final_orientation = data['IMU'][-1] + corr_angle
+        final_orientation, changeValue = gtw.checkRange(final_orientation)
+        gtw.alignOrientation(ser, velocity, final_orientation, tolerance, v_decrease)
+        print("We got a hit in the right")
 
-        elif left < hit_distance and right < hit_distance:
-            print("hit on both sides")
-
-        else:
-            hit = False
-            print("No hits")
+    elif side_left < hit_distance and side_right < hit_distance:
+        print("hit on both sides")
+        
+    elif center < hit_distance:
+        print("hit in front")
+    else:
+        print("No hits")
         
 def run2():
     ser = serial.Serial(str('/dev/ttyACM0'), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
