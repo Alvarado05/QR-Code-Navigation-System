@@ -40,7 +40,7 @@ while node != "Delivered":
 steps.reverse()
 directions = gf.stepsToCardinality(steps, nodes_df)
 directions = gf.cardToOrientation(directions, DIRECT_DICT)
-
+steps.pop(0)
 gtw.run(COMPORT, directions, steps, tolerance, velocity)
 
 # print(waypoint)
