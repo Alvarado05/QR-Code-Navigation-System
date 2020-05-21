@@ -1,7 +1,7 @@
 #include <Buzzer.h>
 
 Buzzer::Buzzer(byte buzzerPin, byte state) {
-    pinMode(buzzerPin. OUTPUT);
+    pinMode(buzzerPin, OUTPUT);
     _buzzerPin = buzzerPin;
 }
 
