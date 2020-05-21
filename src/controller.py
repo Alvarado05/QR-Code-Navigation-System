@@ -37,7 +37,7 @@ node = standby.run(nodes_df)
 while node != "Delivered":
     node = standby.run(nodes_df)
 
-steps = steps.reverse()
+steps.reverse()
 directions = gf.stepsToCardinality(steps, nodes_df)
 directions = gf.cardToOrientation(directions, DIRECT_DICT)
 
