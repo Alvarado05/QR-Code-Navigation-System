@@ -88,6 +88,7 @@ def run(comChannel, orientations, steps, tolerance, velocity, v_decrease):
     i = len(orientations)
     i2 = 0
     hit_distance = 20
+    front_hit_distance = 25
     corr_angle = 0.0872665
     while i2 < i :
 
@@ -100,7 +101,7 @@ def run(comChannel, orientations, steps, tolerance, velocity, v_decrease):
         scan = qrf.qrScanner()                              # scan qrCode
         
         while scan == None or scan != steps[i2]:                                 # while qrcode not present
-            cav.run(ser, hit_distance, corr_angle, velocity, tolerance, v_decrease)
+            cav.run(ser, hit_distance, front_hit_distance, corr_angle, velocity, tolerance, v_decrease)
             move(ser,velocity, velocity)                    #   Move forward
             scan = qrf.qrScanner()                          #   scan qrCode
             if scan != None:
