@@ -27,7 +27,7 @@ directions = gf.cardToOrientation(directions, DIRECT_DICT)
 # print(directions)
 tolerance = 0.1
 velocity = 50
-v_decrease = .25
+v_decrease = .1
 print(steps)
 steps.pop(0)
 print(steps)
