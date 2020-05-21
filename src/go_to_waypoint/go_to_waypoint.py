@@ -25,6 +25,7 @@ def read(ser, slp):
     splitedList = []                                        # the frequency of the samples for the sensors to adquiere the info
     arduinoData = ser.read_until("\n").decode('ascii')      # reading the info from arduino and decoding it (ascii)
     arduinoData = arduinoData.splitlines()
+    print(arduinoData)
     for i in range(len(arduinoData)):
             splitedList.append(arduinoData[i].split(','))   # priting the arduino serial (sensors info)
     print(splitedList)
