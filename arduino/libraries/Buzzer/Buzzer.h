@@ -6,13 +6,13 @@
 class Buzzer
 {
     public:
-    //Constructors
-    Buzzer(byte buzzerPin);
+        //Constructors
+        Buzzer(byte buzzerPin);
 
-    //Functions
-    void arrived();
-    void rotate();
-    void error();
+        //Functions
+        void arrived();
+        void rotate();
+        void error();
 
     private:
         byte _buzzerPin;
