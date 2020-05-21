@@ -12,7 +12,8 @@
 #include <Movement.h>
 #include <NewPing.h>
 #include <Odometry.h>
-#include <Servo.h>
+//#include <Servo.h>
+#include <Buzzer.h>
 
 // Constants
 #define PI 3.14159265358979323846
@@ -64,6 +65,9 @@ byte centerSignal = 5;
 byte rightSignal = 6;
 byte rightSideSignal = 12;
 
+//Buzzer
+byte buzzerPin = 13;
+
 
 ////////////////////////////
 ////Class Instantiations////
@@ -83,6 +87,7 @@ NewPing leftUS(leftSignal, leftSignal, 330);
 NewPing centerUS(centerSignal, centerSignal, 330);
 NewPing rightUS(rightSignal, rightSignal, 330);
 NewPing rightSideUS(rightSideSignal, rightSideSignal, 330);
+Buzzer buzz = Buzzer(buzzerPin);
 
 
 /////////////
@@ -157,6 +162,9 @@ void parse() {
   }
   else if (rxBuffer == "s") {
     move.stop();
+  }
+  else if (rxBuffer == "b") {
+    buzz.error();
   }
   else if (rxBuffer == "d") {
     /*
