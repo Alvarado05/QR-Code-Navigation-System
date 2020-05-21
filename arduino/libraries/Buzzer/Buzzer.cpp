@@ -1,6 +1,6 @@
 #include <Buzzer.h>
 
-Buzzer::Buzzer(byte buzzerPin, byte state) {
+Buzzer::Buzzer(byte buzzerPin) {
     pinMode(buzzerPin, OUTPUT);
     _buzzerPin = buzzerPin;
 }
