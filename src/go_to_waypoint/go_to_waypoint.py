@@ -48,12 +48,10 @@ def run(comChannel, orientations, steps, tolerance, velocity):
     i2 = 0
     while i2 < i :
         print("Orientation:", orientations[i2])
-        print("Steps:", steps[i2])
+        print("Step:", steps[i2])
         min_orientation = orientations[i2] - tolerance
         max_orientation = orientations[i2] + tolerance
-        print("Min_orientation: ", min_orientation)
-        print("Max_orientaion: ", max_orientation)
-        
+
         changeValue = False
         # if any of the two fall outside the rango of 0-360, convert them
         if min_orientation  < 0:
@@ -62,9 +60,7 @@ def run(comChannel, orientations, steps, tolerance, velocity):
         elif max_orientation > 2*math.pi:
             max_orientation = max_orientation - (2*math.pi)
             changeValue = True
-        print("Change Value: ", changeValue)
-        print("Min_orientation: ", min_orientation)
-        print("Max_orientaion: ", max_orientation)
+
 
         data = read(ser, .0001)
         cur_orientation = data['IMU'][-1]
@@ -74,6 +70,7 @@ def run(comChannel, orientations, steps, tolerance, velocity):
         # while orientation is not right, rotate
         if changeValue == False:
             while (cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)):
+                print("Aligning from:", cur_orientation, "to:", orientations[i2])
                 alignOrientation(ser, velocity, cur_orientation, orientations[i2])
                 data = read(ser, .0001)
                 cur_orientation = data['IMU'][-1]
@@ -84,7 +81,7 @@ def run(comChannel, orientations, steps, tolerance, velocity):
                 data = read(ser, .0001)
                 cur_orientation = data['IMU'][-1]
                 print(cur_orientation)
-                
+        print('Finished Rotation')        
         stop(ser)
         
         scan = qrf.qrScanner()                              # scan qrCode
