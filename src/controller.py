@@ -34,7 +34,7 @@ gtw.run(COMPORT, directions, steps, tolerance, velocity)
 
 node = standby.run(nodes_df)
 
-while node != "*":
+while node != "Delivered":
     node = standby.run(nodes_df)
 
 steps = steps.reverse()
