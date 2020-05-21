@@ -32,6 +32,17 @@ print(steps)
 
 gtw.run(COMPORT, directions, steps, tolerance, velocity)
 
+node = standby.run(nodes_df)
+
+while node != "*":
+    node = standby.run(nodes_df)
+
+steps = steps.reverse()
+directions = gf.stepsToCardinality(steps, nodes_df)
+directions = gf.cardToOrientation(directions, DIRECT_DICT)
+
+gtw.run(COMPORT, directions, steps, tolerance, velocity)
+
 # print(waypoint)
 
 
