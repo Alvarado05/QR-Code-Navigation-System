@@ -14,6 +14,9 @@ class Buzzer
     void rotate();
     void error();
 
+    private:
+        byte _buzzerPin;
+
 };
 
 #endif
