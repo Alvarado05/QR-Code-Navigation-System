@@ -7,7 +7,7 @@ from go_to_waypoint import go_to_waypoint as gtw
 import pandas as pd
 NODE_FILE = "src/A_Star/Maps/CarlosSecondFloor.csv"
 CONNECTION_FILE = "src/A_Star/Maps/CarlosSecondFloorConnections.csv"
-NORTH =2.06
+NORTH = 1.99
 DIRECT_DICT = gf.northToCardinal(NORTH)
 COMPORT = '/dev/ttyACM0'
 nodes_df = pd.read_csv(NODE_FILE, index_col='Nodes')
