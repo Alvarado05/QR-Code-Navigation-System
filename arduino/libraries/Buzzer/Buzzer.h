@@ -5,7 +5,7 @@ class Buzzer
 {
     public:
     //Constructors
-    Buzzer(byte buzzerPin)
+    Buzzer(byte buzzerPin);
 
     //Functions
     void arrived();
