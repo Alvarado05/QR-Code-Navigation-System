@@ -11,6 +11,7 @@
 import serial       # pip install serial, pip install pyserial
 import time
 from qr_code import QRCodeFunctions as qrf
+from go_to_waypoint import collision_avoidance as cav
 import math
 
 def move(ser, leftV, rightV):
@@ -32,6 +33,14 @@ def read(ser, slp):
     dataDict = {j[0]:[float(i) for i in j[1:]]  for j in splitedList}
     return dataDict                                         # priting the arduino serial (sensors info)
 
+    def checkRange(degree):
+        if degree  < 0:
+            degree = degree + (2*math.pi)
+        elif degree > (2 * math.pi):
+            degree = degree - (2*math.pi)
+
+        return degree
+
 def alignOrientation(ser, velocity, start_orientation, final_orientation):
     angle_between = start_orientation-final_orientation
     if angle_between < 0:
@@ -46,6 +55,8 @@ def run(comChannel, orientations, steps, tolerance, velocity):
     ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = 1)   # Setup for the arduino communication
     i = len(orientations)
     i2 = 0
+    hit_distance = 34
+    corr_angle = 0.349066
     while i2 < i :
 
         print("Orientation:", orientations[i2])
@@ -88,6 +99,7 @@ def run(comChannel, orientations, steps, tolerance, velocity):
         scan = qrf.qrScanner()                              # scan qrCode
         
         while scan == None or scan != steps[i2]:                                 # while qrcode not present
+            cav.run(ser, hit_distance, corr_angle, velocity)
             move(ser,velocity, velocity)                    #   Move forward
             scan = qrf.qrScanner()                          #   scan qrCode
             if scan != None:
