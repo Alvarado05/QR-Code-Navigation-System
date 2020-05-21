@@ -1,4 +1,4 @@
-import go_to_waypoint as gtw
+from go_to_waypoint import read as gtw
 import serial
 
 ser = serial.Serial(str('/dev/ttyACM0'), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
