@@ -27,11 +27,12 @@ directions = gf.cardToOrientation(directions, DIRECT_DICT)
 # print(directions)
 tolerance = 0.1
 velocity = 50
+v_decrease = .5
 print(steps)
 steps.pop(0)
 print(steps)
 
-gtw.run(COMPORT, directions, steps, tolerance, velocity)
+gtw.run(COMPORT, directions, steps, tolerance, velocity, v_decrease)
 
 node = standby.run(nodes_df)
 
@@ -45,5 +46,5 @@ directions = gf.cardToOrientation(directions, DIRECT_DICT)
 print(directions)
 steps.pop(0)
 print(steps)
-gtw.run(COMPORT, directions, steps, tolerance, velocity)
+gtw.run(COMPORT, directions, steps, tolerance, velocity, v_decrease)
 

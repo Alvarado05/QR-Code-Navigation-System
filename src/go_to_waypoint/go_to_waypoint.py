@@ -51,13 +51,15 @@ def changeOrientation(ser, velocity, start_orientation, final_orientation):
         move(ser,velocity*(-1),velocity)
     return None
 
-def alignOrientation (ser, velocity, final_orientation, tolerance):
+def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     # while orientation is not right, rotate
     data = read(ser, .0001)
     cur_orientation = data['IMU'][-1]
 
     min_orientation = final_orientation - tolerance
     max_orientation = final_orientation + tolerance
+
+    velocity = velocity*v_decrease
 
     changeValue = False
     # if any of the two fall outside the rango of 0-360, convert them
@@ -81,7 +83,7 @@ def alignOrientation (ser, velocity, final_orientation, tolerance):
     print('Finished Rotation')        
     stop(ser)
 
-def run(comChannel, orientations, steps, tolerance, velocity):
+def run(comChannel, orientations, steps, tolerance, velocity, v_decrease):
     ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
     i = len(orientations)
     i2 = 0
@@ -93,12 +95,12 @@ def run(comChannel, orientations, steps, tolerance, velocity):
         print("Step:", steps[i2])
         
 
-        alignOrientation(ser, velocity, orientations[i2], tolerance)
+        alignOrientation(ser, velocity, orientations[i2], tolerance, v_decrease)
 
         scan = qrf.qrScanner()                              # scan qrCode
         
         while scan == None or scan != steps[i2]:                                 # while qrcode not present
-            cav.run(ser, hit_distance, corr_angle, velocity, tolerance)
+            cav.run(ser, hit_distance, corr_angle, velocity, tolerance, v_decrease)
             move(ser,velocity, velocity)                    #   Move forward
             scan = qrf.qrScanner()                          #   scan qrCode
             if scan != None:
