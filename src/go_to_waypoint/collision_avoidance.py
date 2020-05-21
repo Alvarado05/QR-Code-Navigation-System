@@ -1,10 +1,6 @@
-from qr_code import QRCodeFunctions as qrf
 from go_to_waypoint import go_to_waypoint as gtw
 import serial
 
-scan = qrf.qrScanner() 
-
-ser = serial.Serial(str('/dev/ttyACM0'), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
 def run(ser, hit_distance):
     data = gtw.read(ser, 121)
 
@@ -18,5 +14,7 @@ def run(ser, hit_distance):
         print("We got a hit in the right")
     else:
         print("hit to both sides")
-
-run(ser)
+def run2():
+    ser = serial.Serial(str('/dev/ttyACM0'), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
+    hit_distance = 55
+    run(ser, hit_distance)
