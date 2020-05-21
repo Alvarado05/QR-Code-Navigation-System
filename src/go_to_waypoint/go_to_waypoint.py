@@ -47,6 +47,7 @@ def run(comChannel, orientations, steps, tolerance, velocity):
     i2 = 0
     while i2 < i :
         if steps[i2] == 5:
+            i2 += 1
             continue
         print("Orientation:", orientations[i2])
         print("Step:", steps[i2])
