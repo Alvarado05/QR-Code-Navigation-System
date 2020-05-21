@@ -65,7 +65,8 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     # if any of the two fall outside the rango of 0-360, convert them
     min_orientation, changeValue = checkRange(min_orientation)
     max_orientation, changeValue = checkRange(max_orientation)
-
+    print("The minimum orientation is:", min_orientation)
+    print("The maximum orientation is:", max_orientation)
 
     if changeValue == False:
         while (cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)):
@@ -103,6 +104,7 @@ def run(comChannel, orientations, steps, tolerance, velocity, v_decrease):
         while scan == None or scan != steps[i2]:                                 # while qrcode not present
             cav.run(ser, hit_distance, front_hit_distance, corr_angle, velocity, tolerance, v_decrease)
             move(ser,velocity, velocity)                    #   Move forward
+            print("Scanning")
             scan = qrf.qrScanner()                          #   scan qrCode
             if scan != None:
                 scan = int(scan)
