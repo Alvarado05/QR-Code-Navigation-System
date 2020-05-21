@@ -12,8 +12,10 @@ def run(ser, hit_distance):
         print("We got a hit in the left")
     elif right < hit_distance and left > hit_distance:
         print("We got a hit in the right")
+    elif left < hit_distance and right < hit_distance:
+        print("hit on both sides")
     else:
-        print("hit to both sides")
+        print("No hits")
 def run2():
     ser = serial.Serial(str('/dev/ttyACM0'), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
     hit_distance = 34
