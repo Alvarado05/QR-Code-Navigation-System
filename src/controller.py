@@ -30,7 +30,7 @@ print(steps)
 steps.pop(0)
 print(steps)
 
-# gtw.run(COMPORT, directions, steps, tolerance, velocity)
+gtw.run(COMPORT, directions, steps, tolerance, velocity)
 
 node = standby.run(nodes_df)
 
