@@ -1,7 +1,7 @@
 from go_to_waypoint import go_to_waypoint as gtw
 import serial
 
-def run(ser, hit_distance, corr_angle, velocity):
+def run(ser, hit_distance, corr_angle, velocity, tolerance):
     data = gtw.read(ser, 121)
     left = data['USSL'][-1]
     right = data['USSR'][-1]
@@ -11,18 +11,23 @@ def run(ser, hit_distance, corr_angle, velocity):
         data = gtw.read(ser, 121)
         left = data['USSL'][-1]
         right = data['USSR'][-1]
+        changeValue = False
+
         if left < hit_distance and right > hit_distance:
             final_orientation = data['IMU'][-1] - corr_angle
-            final_orientation = gtw.checkRange(final_orientation)
-            gtw.alignOrientation(ser, velocity, data['IMU'][-1], final_orientation)
+            final_orientation, changeValue = gtw.checkRange(final_orientation)
+            gtw.alignOrientation(ser, velocity, final_orientation, tolerance)
             print("We got a hit in the left")
+
         elif right < hit_distance and left > hit_distance:
             final_orientation = data['IMU'][-1] + corr_angle
-            final_orientation = gtw.checkRange(final_orientation)
-            gtw.alignOrientation(ser, velocity, data['IMU'][-1], final_orientation)
+            final_orientation, changeValue = gtw.checkRange(final_orientation)
+            gtw.alignOrientation(ser, velocity, final_orientation, tolerance)
             print("We got a hit in the right")
+
         elif left < hit_distance and right < hit_distance:
             print("hit on both sides")
+
         else:
             hit = False
             print("No hits")
