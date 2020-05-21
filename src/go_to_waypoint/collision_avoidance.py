@@ -16,5 +16,5 @@ def run(ser, hit_distance):
         print("hit to both sides")
 def run2():
     ser = serial.Serial(str('/dev/ttyACM0'), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
-    hit_distance = 30
+    hit_distance = 34
     run(ser, hit_distance)
