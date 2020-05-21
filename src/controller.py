@@ -45,10 +45,3 @@ print(directions)
 steps.pop(0)
 print(steps)
 gtw.run(COMPORT, directions, steps, tolerance, velocity)
-
-# print(waypoint)
-
-
-
-
-
