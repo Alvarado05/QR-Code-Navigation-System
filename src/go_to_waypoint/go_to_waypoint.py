@@ -64,6 +64,7 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     max_orientation = final_orientation + tolerance
 
     velocity = velocity*v_decrease
+    changeValue = False
     # if any of the two fall outside the rango of 0-360, convert them
     min_orientation, changeValue = checkRange(min_orientation)
     max_orientation, changeValue = checkRange(max_orientation)
@@ -72,7 +73,7 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
 
     data = read(ser, .0001)
     cur_orientation = data['IMU'][-1]
-    changeValue = False
+    
     if changeValue == False:
         while (cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)):
             data = read(ser, .0001)
