@@ -46,7 +46,7 @@ def checkRange(degree):
         degree = degree - (2*math.pi)
         print("changed Value")
         changeValue = True
-    return degree , changeValue
+    return degree, changeValue
 
 def changeOrientation(ser, velocity, start_orientation, final_orientation):
     angle_between = start_orientation-final_orientation
@@ -64,7 +64,6 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     min_orientation = final_orientation - tolerance
     max_orientation = final_orientation + tolerance
     velocity = int(velocity*v_decrease)
-    changeValue = False
     # if any of the two fall outside the rango of 0-360, convert them
     min_orientation, changeValue = checkRange(min_orientation)
     max_orientation, changeValue = checkRange(max_orientation)
