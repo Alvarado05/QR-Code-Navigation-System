@@ -72,6 +72,7 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
 
     data = read(ser, .0001)
     cur_orientation = data['IMU'][-1]
+    stop(ser)
     
     if changeValue == False:
         while (cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)):
