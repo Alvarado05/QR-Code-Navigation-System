@@ -116,7 +116,7 @@ def run(comChannel, orientations, steps, tolerance, velocity, v_decrease):
     i = len(orientations)
     i2 = 0
     hit_distance = 30
-    front_hit_distance = 40
+    front_hit_distance = 45
     corr_angle = 0.122173
     while i2 < i :
 
