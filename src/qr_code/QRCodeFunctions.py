@@ -25,7 +25,7 @@ def qrScanner():
     j = 0
     qrIDs = ""
 
-    while j < 30:
+    while j < 20:
         _, frame = camera.read()
 
         gray = cv2.cvtColor(frame[100:250, 240:390], cv2.COLOR_BGR2GRAY)
