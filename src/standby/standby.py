@@ -1,13 +1,18 @@
 import pandas as pd
-
-def run(nodes):
+from general_functions import general_functions as gf
+def run(nodes, keypad):
     nodes = nodes.index.tolist()
     print(nodes)
     while True:
         missionNodes = []
         inNodes = False
         inNodes2 = False
-        startNode = input()
+        if keypad == True:
+            startNode = gf.keypadRead()
+        else:
+            startNode = input()
+
+
         try:
             startNode = int(startNode)
         except:
@@ -16,7 +21,13 @@ def run(nodes):
         if startNode == "*":
             return "Delivered"
         else:
-            endNode = input()
+
+            if keypad == True:
+                endNode = gf.keypadRead()
+            else:
+                endNode = input()
+
+            
             try:
                 endNode = int(endNode)
             except:
