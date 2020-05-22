@@ -66,7 +66,6 @@ def changeOrientation(ser, velocity, start_orientation, final_orientation):
 def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     # while orientation is not right, rotate
     stop(ser)
-    # buzzer(ser, 1)
     min_orientation = final_orientation - tolerance
     max_orientation = final_orientation + tolerance
     velocity = int(velocity*v_decrease)
