@@ -10,17 +10,18 @@ def run(ser, hit_distance, front_hit_distance,  corr_angle, velocity, tolerance,
     right = data['USR'][-1]
 
     if (side_left < hit_distance and side_right > hit_distance) or (left < front_hit_distance and right > front_hit_distance):
+        print("We got a hit in the left")
         final_orientation = data['IMU'][-1] - corr_angle
         final_orientation, changeValue = gtw.checkRange(final_orientation)
         gtw.alignOrientation(ser, velocity, final_orientation, tolerance, v_decrease)
-        print("We got a hit in the left")
+        
 
     elif (side_right < hit_distance and side_left > hit_distance) or (right < front_hit_distance and left > front_hit_distance):
+        print("We got a hit in the right")
         final_orientation = data['IMU'][-1] + corr_angle
         final_orientation, changeValue = gtw.checkRange(final_orientation)
         gtw.alignOrientation(ser, velocity, final_orientation, tolerance, v_decrease)
-        print("We got a hit in the right")
-
+        
     elif side_left < hit_distance and side_right < hit_distance:
         print("hit on both sides")
         
