@@ -14,6 +14,7 @@ DIRECT_DICT = gf.northToCardinal(NORTH)
 COMPORT = '/dev/ttyACM0'
 ser = serial.Serial(str(COMPORT), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
 
+print(keypadRead())
 
 nodes_df = pd.read_csv(NODE_FILE, index_col='Nodes')
 connections_df = pd.read_csv(CONNECTION_FILE)
