@@ -71,7 +71,8 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     print("changeValue2:", changeValue2)
     if changeValue1 == True or changeValue1 == True:
         changeValue = True
-
+    else:
+        changeValue = False
     print("Start of orientation")
     print("The minimum orientation is:", min_orientation)
     print("The maximum orientation is:", max_orientation)
