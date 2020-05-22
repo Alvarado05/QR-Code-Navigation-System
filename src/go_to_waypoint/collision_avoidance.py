@@ -30,10 +30,10 @@ def run(ser, hit_distance, front_hit_distance,  corr_angle, velocity, tolerance,
     else:
         print("No hits")
         
-def run2():
-    ser = serial.Serial(str('/dev/ttyACM0'), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
-    hit_distance = 34
-    corr_angle = 0.174533
-    velocity = 50
-    tolerance = 0.05
-    run(ser, hit_distance, corr_angle, velocity, tolerance)
+# def run2():
+#     ser = serial.Serial(str('/dev/ttyACM0'), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
+#     hit_distance = 34
+#     corr_angle = 0.174533
+#     velocity = 50
+#     tolerance = 0.05
+#     run(ser, hit_distance, corr_angle, velocity, tolerance)

@@ -25,9 +25,9 @@ directions = gf.stepsToCardinality(steps, nodes_df)
 # print(directions)
 directions = gf.cardToOrientation(directions, DIRECT_DICT)
 # print(directions)
-tolerance = 0.08
+tolerance = 0.07
 velocity = 50
-v_decrease = .70
+v_decrease = .80
 print(steps)
 steps.pop(0)
 print(steps)
