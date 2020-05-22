@@ -95,4 +95,5 @@ def keypadRead():
         event = '\n'
     else:
         event = event
+    print(event)
     return event
