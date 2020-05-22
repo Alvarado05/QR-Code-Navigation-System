@@ -81,15 +81,15 @@ def keypadRead():
 
             if (event == 'ASTERISK'):
                 event = '*'
-            else if(event == 'SLASH'):
+            elif(event == 'SLASH'):
                 event = '/'
-            else if(event == 'PLUS'):
+            elif(event == 'PLUS'):
                 event = '+'
-            else if(event == 'MINUS'):
+            elif(event == 'MINUS'):
                 event = '-'
-            else if(event == 'DOT'):
+            elif(event == 'DOT'):
                 event = '.'
-            else if(event == 'ENTER'):
+            elif(event == 'ENTER'):
                 event = '\n'
             else:
                 event = event
