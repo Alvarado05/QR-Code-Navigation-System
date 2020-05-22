@@ -1,5 +1,7 @@
 import math
 import numpy as np
+from evdev import InputDevice, categorize, ecodes
+
 def stepsToCardinality(steps, nodes):
     """
     Converts steps of nodes to cardinality directions based on the robot's map
@@ -66,3 +68,32 @@ def northToCardinal(north):
             Dict[i] = round(Dict[i] - math.pi*2, 3)
             
     return Dict
+
+def keypadRead():
+    device = InputDevice("/dev/input/event3") # my keyboard
+    event = None
+    event = device.active_keys(verbose=True)
+
+    while event == []:
+        event = device.active_keys(verbose=True)
+
+    device.close()
+    event = event[0][0].split('KP')
+    event = event[1]
+
+    if (event == 'ASTERISK'):
+        event = '*'
+    elif(event == 'SLASH'):
+        event = '/'
+    elif(event == 'PLUS'):
+        event = '+'
+    elif(event == 'MINUS'):
+        event = '-'
+    elif(event == 'DOT'):
+        event = '.'
+    elif(event == 'ENTER'):
+        event = '\n'
+    else:
+        event = event
+    print(event)
+    return event
