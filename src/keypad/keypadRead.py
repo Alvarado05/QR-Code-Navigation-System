@@ -7,7 +7,6 @@ for event in device.read_loop():
         print(type(event))
         event = str(categorize(event))
         event = event.split(',')
-        event = event[1]
-        event = event[-2]
+        event = event[1].split('KP').remove(-1)
         print(event)
 
