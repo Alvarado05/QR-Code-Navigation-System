@@ -1,14 +1,17 @@
 from evdev import InputDevice, categorize, ecodes
+import sys
+import time
+
 
 device = InputDevice("/dev/input/event3") # my keyboard
-for event in device.read_loop():
-    if event.type == ecodes.EV_KEY:
-        print(categorize(event))
-        print(type(event))
-        event = str(categorize(event))
-        event = event.split(',')
-        event = event[1].split('KP')
-        event = event[1]
-        event = event[:-1]
-        print(event)
 
+event = device.active_keys(verbose=True)
+
+while event == []:
+ event = device.active_keys(verbose=True)
+
+
+device.close()
+event = event[0][0].split('KP')
+event = event[1]
+print(event)
