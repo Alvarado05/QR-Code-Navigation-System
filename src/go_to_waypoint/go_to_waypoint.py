@@ -63,7 +63,6 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     min_orientation = final_orientation - tolerance
     max_orientation = final_orientation + tolerance
 
-    velocity = velocity*v_decrease
     changeValue = False
     # if any of the two fall outside the rango of 0-360, convert them
     min_orientation, changeValue = checkRange(min_orientation)
@@ -81,6 +80,8 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
             print("Aligning from:", cur_orientation, "to:", final_orientation)
             changeOrientation(ser, velocity, cur_orientation, final_orientation)
             time.sleep(.2)
+            data = read(ser, .0001)
+            cur_orientation = data['IMU'][-1]
             print("changeValue:", changeValue)
             print(cur_orientation)
     else: 
@@ -88,6 +89,8 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
             data = read(ser, .0001)
             cur_orientation = data['IMU'][-1]
             changeOrientation(ser, velocity, cur_orientation, final_orientation) 
+            data = read(ser, .0001)
+            cur_orientation = data['IMU'][-1]
             print("changeValue:", changeValue)          
             print(cur_orientation)
     print('Finished Rotation')        
