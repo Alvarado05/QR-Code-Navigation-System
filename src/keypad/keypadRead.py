@@ -9,4 +9,5 @@ for event in device.read_loop():
         event = event.split(',')
         event = event[1]
         event = event[-2]
+        print(event)
 
