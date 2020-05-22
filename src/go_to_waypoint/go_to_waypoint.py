@@ -18,6 +18,7 @@ def move(ser, leftV, rightV):
     print("LeftV:", leftV)
     print("rightV:", rightV)
     concatenation = 'v,'+ str(leftV) + ',' + str(rightV) +'\n'
+    print(concatenation)
     ser.write(bytes(concatenation, 'ascii')) 
 
 def stop(ser):
