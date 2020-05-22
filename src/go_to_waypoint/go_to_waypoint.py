@@ -86,8 +86,7 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
         while (cur_orientation > max_orientation and cur_orientation < min_orientation):
             data = read(ser, .0001)
             cur_orientation = data['IMU'][-1]
-            changeOrientation(ser, velocity, cur_orientation, final_orientation)  
-            time.sleep(.2)
+            changeOrientation(ser, velocity, cur_orientation, final_orientation) 
             print("changeValue:", changeValue)          
             print(cur_orientation)
     print('Finished Rotation')        
