@@ -60,6 +60,7 @@ def changeOrientation(ser, velocity, start_orientation, final_orientation):
 
 def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     # while orientation is not right, rotate
+    stop(ser)
     min_orientation = final_orientation - tolerance
     max_orientation = final_orientation + tolerance
     velocity = int(velocity*v_decrease)
@@ -95,6 +96,7 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
             print(cur_orientation)
     print('Finished Rotation')        
     stop(ser)
+    return None
 
 def run(comChannel, orientations, steps, tolerance, velocity, v_decrease):
     ser = serial.Serial(str(comChannel), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
