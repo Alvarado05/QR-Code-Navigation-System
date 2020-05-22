@@ -37,5 +37,5 @@ def run2():
     v_decrease = .80
     corr_angle = 0.122173
     velocity = 50
-    tolerance = 0.05
+    tolerance = 0.07
     run(ser, hit_distance, front_hit_distance, corr_angle, velocity, tolerance, v_decrease)
