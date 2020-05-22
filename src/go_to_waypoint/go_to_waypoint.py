@@ -23,6 +23,11 @@ def move(ser, leftV, rightV):
 
 def stop(ser):
     ser.write(b's\n')
+
+def buzzer(ser,number):
+    concatenation = 'b,' + str(number) + '\n'
+    ser.write(bytes(concatenation, 'ascii')) 
+
 def read(ser, slp):
     ser.write(b'd\n')
     # time.sleep(slp)
@@ -61,6 +66,7 @@ def changeOrientation(ser, velocity, start_orientation, final_orientation):
 def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     # while orientation is not right, rotate
     stop(ser)
+    buzzer(ser, 1)
     min_orientation = final_orientation - tolerance
     max_orientation = final_orientation + tolerance
     velocity = int(velocity*v_decrease)
