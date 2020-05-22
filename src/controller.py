@@ -32,19 +32,20 @@ print(steps)
 steps.pop(0)
 print(steps)
 
-gtw.run(COMPORT, directions, steps, tolerance, velocity, v_decrease)
+# gtw.run(COMPORT, directions, steps, tolerance, velocity, v_decrease)
 
-node = standby.run(nodes_df)
+# node = standby.run(nodes_df)
 
-while node != "Delivered":
-    node = standby.run(nodes_df)
+# while node != "Delivered":
+#     node = standby.run(nodes_df)
 
-steps.reverse()
-directions = gf.stepsToCardinality(steps, nodes_df)
-print(directions)
-directions = gf.cardToOrientation(directions, DIRECT_DICT)
-print(directions)
-steps.pop(0)
-print(steps)
-gtw.run(COMPORT, directions, steps, tolerance, velocity, v_decrease)
+# steps.reverse()
+# directions = gf.stepsToCardinality(steps, nodes_df)
+# print(directions)
+# directions = gf.cardToOrientation(directions, DIRECT_DICT)
+# print(directions)
+# steps.pop(0)
+# print(steps)
+# gtw.run(COMPORT, directions, steps, tolerance, velocity, v_decrease)
+cav.run2()
 
