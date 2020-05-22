@@ -70,6 +70,7 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     max_orientation, changeValue = checkRange(max_orientation)
     print("The minimum orientation is:", min_orientation)
     print("The maximum orientation is:", max_orientation)
+    print("changeValue:", changeValue)
 
     data = read(ser, .0001)
     cur_orientation = data['IMU'][-1]
