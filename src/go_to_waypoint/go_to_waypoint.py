@@ -69,10 +69,13 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     max_orientation, changeValue2 = checkRange(max_orientation)
     print("changeValue1:", changeValue1)
     print("changeValue2:", changeValue2)
-    changeValue = changeValue1 or changeValue1
+    if changeValue1 == True or changeValue1 == True:
+        changeValue = True
+
     print("Start of orientation")
     print("The minimum orientation is:", min_orientation)
     print("The maximum orientation is:", max_orientation)
+    print("changeValue should be:", (changeValue1 or changeValue2))
     print("changeValue:", changeValue)
 
     data = read(ser, .0001)

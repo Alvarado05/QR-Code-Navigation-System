@@ -11,12 +11,12 @@ def run(ser, hit_distance, front_hit_distance,  corr_angle, velocity, tolerance,
 
     if (left < front_hit_distance and right > front_hit_distance):
         print("We got a hit in the front left")
-        final_orientation = data['IMU'][-1] - 0.20944
+        final_orientation = data['IMU'][-1] - 0.349066
         final_orientation, changeValue = gtw.checkRange(final_orientation)
         gtw.alignOrientation(ser, velocity, final_orientation, tolerance, v_decrease)
     elif (right < front_hit_distance and left > front_hit_distance):
         print("We got a hit in  front right")
-        final_orientation = data['IMU'][-1] + 0.20944
+        final_orientation = data['IMU'][-1] + 0.349066
         final_orientation, changeValue = gtw.checkRange(final_orientation)
         gtw.alignOrientation(ser, velocity, final_orientation, tolerance, v_decrease)
 
