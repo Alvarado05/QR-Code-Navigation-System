@@ -12,9 +12,8 @@ CONNECTION_FILE = "src/A_Star/Maps/CarlosSecondFloorConnections.csv"
 NORTH = 2.35
 DIRECT_DICT = gf.northToCardinal(NORTH)
 COMPORT = '/dev/ttyACM0'
+KEYPAD = True
 ser = serial.Serial(str(COMPORT), baudrate = 9600, timeout = .1)   # Setup for the arduino communication
-
-print(gf.keypadRead())
 
 nodes_df = pd.read_csv(NODE_FILE, index_col='Nodes')
 connections_df = pd.read_csv(CONNECTION_FILE)
