@@ -79,7 +79,6 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
             cur_orientation = data['IMU'][-1]
             print("Aligning from:", cur_orientation, "to:", final_orientation)
             changeOrientation(ser, velocity, cur_orientation, final_orientation)
-            time.sleep(.2)
             data = read(ser, .0001)
             cur_orientation = data['IMU'][-1]
             print("changeValue:", changeValue)
