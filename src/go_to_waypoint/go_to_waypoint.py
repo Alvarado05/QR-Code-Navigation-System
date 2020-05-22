@@ -69,7 +69,7 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     max_orientation, changeValue2 = checkRange(max_orientation)
     print("changeValue1:", changeValue1)
     print("changeValue2:", changeValue2)
-    if changeValue1 == True or changeValue1 == True:
+    if changeValue1 == True or changeValue2 == True:
         changeValue = True
     else:
         changeValue = False
