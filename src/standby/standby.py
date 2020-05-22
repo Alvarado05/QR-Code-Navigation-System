@@ -1,5 +1,6 @@
 import pandas as pd
 from general_functions import general_functions as gf
+import time
 def run(nodes, keypad):
     nodes = nodes.index.tolist()
     print(nodes)
@@ -9,6 +10,7 @@ def run(nodes, keypad):
         inNodes2 = False
         if keypad == True:
             startNode = gf.keypadRead()
+            time.sleep(1)
         else:
             startNode = input()
 
@@ -24,6 +26,7 @@ def run(nodes, keypad):
 
             if keypad == True:
                 endNode = gf.keypadRead()
+                time.sleep(1)
             else:
                 endNode = input()
 

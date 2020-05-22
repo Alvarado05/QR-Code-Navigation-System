@@ -71,7 +71,7 @@ def northToCardinal(north):
 
 def keypadRead():
     device = InputDevice("/dev/input/event3") # my keyboard
-
+    event = None
     event = device.active_keys(verbose=True)
 
     while event == []:
