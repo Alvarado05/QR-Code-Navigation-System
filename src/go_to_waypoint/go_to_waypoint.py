@@ -60,9 +60,6 @@ def changeOrientation(ser, velocity, start_orientation, final_orientation):
 
 def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     # while orientation is not right, rotate
-    data = read(ser, .0001)
-    cur_orientation = data['IMU'][-1]
-
     min_orientation = final_orientation - tolerance
     max_orientation = final_orientation + tolerance
 
@@ -73,6 +70,8 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     print("The minimum orientation is:", min_orientation)
     print("The maximum orientation is:", max_orientation)
 
+    data = read(ser, .0001)
+    cur_orientation = data['IMU'][-1]
     if changeValue == False:
         while (cur_orientation <= (min_orientation) or cur_orientation >= (max_orientation)):
             data = read(ser, .0001)
