@@ -65,8 +65,9 @@ def alignOrientation (ser, velocity, final_orientation, tolerance, v_decrease):
     max_orientation = final_orientation + tolerance
     velocity = int(velocity*v_decrease)
     # if any of the two fall outside the rango of 0-360, convert them
-    min_orientation, changeValue = checkRange(min_orientation)
-    max_orientation, changeValue = checkRange(max_orientation)
+    min_orientation, changeValue1 = checkRange(min_orientation)
+    max_orientation, changeValue2 = checkRange(max_orientation)
+    changeValue = changeValue1 or changeValue1
     print("Start of orientation")
     print("The minimum orientation is:", min_orientation)
     print("The maximum orientation is:", max_orientation)
