@@ -12,7 +12,7 @@
 #include <Movement.h>
 #include <NewPing.h>
 #include <Odometry.h>
-#include <Servo.h>
+#include <Buzzer.h>
 
 // Constants
 #define PI 3.14159265358979323846
@@ -22,14 +22,6 @@
 ////////////////
 ////Settings////
 ////////////////
-
-//Gripper (HS-485HB Servo)
-byte fingersPin = 9;
-byte wristPin = 12;
-int fingerMin = 800; //if you want to shift 0 to a new location raise min; this is closed
-int fingerMax = 2600; //if you want to limit max travel lower max; this is open
-int wristMin = 1400; //this is up
-int wristMax = 2600; //this is down
 
 //Movement (VNH5019 Motor Driver Carrier)
 byte rightDirectionA = A3; //"clockwise" input
@@ -56,9 +48,14 @@ unsigned long watchdogTimer = 1000; //fail-safe in case of communication link fa
 unsigned long lastCommTime = 0; //time of last communication from NUC (in ms)
 
 //Ultrasound (Ping))))
+byte leftSideSignal = 9;
 byte leftSignal = 4;
 byte centerSignal = 5;
 byte rightSignal = 6;
+byte rightSideSignal = 12;
+
+//Buzzer
+byte buzzerPin = 13;
 
 
 ////////////////////////////
@@ -70,11 +67,12 @@ LSM303 magnetometer_accelerometer;
 LPS pressure;
 Movement move = Movement(rightSpeedPin, rightDirectionA, rightDirectionB, leftSpeedPin, leftDirectionA, leftDirectionB);
 Odometry odom = Odometry(rightEncoderA, rightEncoderB, leftEncoderA, leftEncoderB, wheelBase, wheelDiameter, cpr);
-Servo fingers;
-Servo wrist;
+NewPing leftSideUS(leftSideSignal, leftSideSignal, 330);
 NewPing leftUS(leftSignal, leftSignal, 330);
 NewPing centerUS(centerSignal, centerSignal, 330);
 NewPing rightUS(rightSignal, rightSignal, 330);
+NewPing rightSideUS(rightSideSignal, rightSideSignal, 330);
+Buzzer buzz = Buzzer(buzzerPin);
 
 
 /////////////
@@ -91,12 +89,6 @@ void setup()
   if (imuStatus()) {
     imuInit();
   }
-
-  fingers.attach(fingersPin,fingerMin,fingerMax);
-  fingers.writeMicroseconds(fingerMin);
-  wrist.attach(wristPin,wristMin,wristMax);
-  wrist.writeMicroseconds(wristMin);
-
   rxBuffer = "";
 }
 
@@ -148,25 +140,21 @@ void parse() {
   else if (rxBuffer == "s") {
     move.stop();
   }
+  else if (rxBuffer == "b") {
+    int state = Serial.parseInt();
+    Serial.println(state);
+
+    if(state == 0){
+      buzz.arrived();
+    }
+    else if(state == 1){
+      buzz.rotate();
+    }
+    else{
+      buzz.error();
+    }
+  }
   else if (rxBuffer == "d") {
-    Serial.print("GRF,");
-    Serial.print(String(fingers.attached()) + ",");
-    if (fingers.attached()) {
-      Serial.println(String(DEG2RAD(fingers.read())));
-    }
-    else {
-      Serial.println();
-    }
-
-    Serial.print("GRW,");
-    Serial.print(String(wrist.attached()) + ",");
-    if (wrist.attached()) {
-      Serial.println(String(DEG2RAD(wrist.read())));
-    }
-    else {
-      Serial.println();
-    }
-
     Serial.print("IMU,");
     bool imuStatusFlag = imuStatus();
     Serial.print(String(imuStatusFlag) + ",");
@@ -209,18 +197,24 @@ void parse() {
     else {
       Serial.println();
     }
-  }
-  else if (rxBuffer == "f") {
-    float radianAngle = Serial.parseFloat();
-    int angle = RAD2DEG(radianAngle); // Convert float radians to int degrees
-    angle = fingerMin + (fingerMax/370) * angle;
-    fingers.writeMicroseconds(angle);
-  }
-  else if (rxBuffer == "w") {
-    float radianAngle = Serial.parseFloat();
-    int angle = RAD2DEG(radianAngle); // Convert float radians to int degrees
-    angle = wristMin + (wristMax/370) * angle;
-    wrist.writeMicroseconds(angle);
+    Serial.print("USSR,");
+    int rightSideUSValue = rightSideUS.ping_cm();
+    Serial.print(String(rightSideUSValue > 0 ? 1 : 0) + ",");
+    if (rightSideUSValue > 0) {
+      Serial.println(String(rightSideUSValue));
+    }
+    else {
+      Serial.println();
+    }
+    Serial.print("USSL,");
+    int leftSideUSValue = leftSideUS.ping_cm();
+    Serial.print(String(leftSideUSValue > 0 ? 1 : 0) + ",");
+    if (leftSideUSValue > 0) {
+      Serial.println(String(leftSideUSValue));
+    }
+    else {
+      Serial.println();
+    }
   }
 }
 
@@ -301,8 +295,8 @@ void imuInit() {
 
   magnetometer_accelerometer.init();
   magnetometer_accelerometer.enableDefault();
-  magnetometer_accelerometer.m_min = (LSM303::vector<int16_t>){ -2247,  -2068,  -1114};
-  magnetometer_accelerometer.m_max = (LSM303::vector<int16_t>){+3369,  +2877,  +3634};
+  magnetometer_accelerometer.m_min = (LSM303::vector<int16_t>){ -2494,  -3131,  -2520};
+  magnetometer_accelerometer.m_max = (LSM303::vector<int16_t>){+4063,  +2462,  +2829};
   magnetometer_accelerometer.setTimeout(1);
 
   pressure.init();
